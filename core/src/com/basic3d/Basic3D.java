@@ -3,7 +3,6 @@ package com.basic3d;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
@@ -14,8 +13,10 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 public class Basic3D implements ApplicationListener {
 	public PerspectiveCamera cam;
 	public ModelBatch modelBatch;
-	public Model model;
-	public ModelInstance instance;
+	public Model cubeModel;
+	public Model sphereModel;
+	public ModelInstance cubeInstance;
+	public ModelInstance sphereInstance;
 	public Environment environment;
 	public CameraInputController camController;
 	public Texture texture;
@@ -40,10 +41,17 @@ public class Basic3D implements ApplicationListener {
 
 		modelBatch = new ModelBatch();
 		ModelBuilder modelBuilder = new ModelBuilder();
-		model = modelBuilder.createBox(10f, 10f, 10f,
+
+		cubeModel = modelBuilder.createBox(10f, 10f, 10f,
 				new Material(TextureAttribute.createDiffuse(texture)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-		instance = new ModelInstance(model);
+		cubeInstance = new ModelInstance(cubeModel);
+
+		sphereModel = modelBuilder.createSphere(10f, 10f, 10f, 30, 30,
+				new Material(TextureAttribute.createDiffuse(texture)),
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
+		sphereInstance = new ModelInstance(sphereModel);
+		sphereInstance.transform.translate(10f, 0, -10f);
 	}
 
 	@Override
@@ -52,7 +60,8 @@ public class Basic3D implements ApplicationListener {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		modelBatch.begin(cam);
-		modelBatch.render(instance,environment);
+		modelBatch.render(cubeInstance,environment);
+		modelBatch.render(sphereInstance,environment);
 		modelBatch.end();
 
 		camController.update();
@@ -61,7 +70,8 @@ public class Basic3D implements ApplicationListener {
 	@Override
 	public void dispose () {
 		modelBatch.dispose();
-		model.dispose();
+		cubeModel.dispose();
+		sphereModel.dispose();
 	}
 
 	@Override
