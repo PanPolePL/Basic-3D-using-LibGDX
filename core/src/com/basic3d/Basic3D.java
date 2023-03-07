@@ -15,26 +15,26 @@ public class Basic3D implements ApplicationListener {
 	public ModelBatch modelBatch;
 	public Model cubeModel;
 	public Model sphereModel;
-	public ModelInstance cubeInstance;
-	public ModelInstance sphereInstance;
+	public ModelInstance cubeInstance, sphereInstance;
 	public Environment environment;
 	public CameraInputController camController;
-	public Texture texture;
+	public Texture sraczTexture, saulTexture;
 
 	@Override
 	public void create () {
 		cam = new PerspectiveCamera(90, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(10f, 10f, 10f);
+		cam.position.set(20f, 20f, 20f);
 		cam.lookAt(0,0,0);
 		cam.near = 1f;
 		cam.far = 300f;
 		cam.update();
 
-		texture=new Texture(Gdx.files.internal("texture.png"));
+		sraczTexture=new Texture(Gdx.files.internal("sracz.png"));
+		saulTexture=new Texture(Gdx.files.internal("saul.jpg"));
 
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, 1f, -0.8f, 0.2f));
 
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
@@ -43,12 +43,12 @@ public class Basic3D implements ApplicationListener {
 		ModelBuilder modelBuilder = new ModelBuilder();
 
 		cubeModel = modelBuilder.createBox(10f, 10f, 10f,
-				new Material(TextureAttribute.createDiffuse(texture)),
+				new Material(TextureAttribute.createDiffuse(sraczTexture)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
 		cubeInstance = new ModelInstance(cubeModel);
 
 		sphereModel = modelBuilder.createSphere(10f, 10f, 10f, 30, 30,
-				new Material(TextureAttribute.createDiffuse(texture)),
+				new Material(TextureAttribute.createDiffuse(saulTexture)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
 		sphereInstance = new ModelInstance(sphereModel);
 		sphereInstance.transform.translate(10f, 0, -10f);
