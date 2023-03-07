@@ -2,11 +2,13 @@ package com.basic3d;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
@@ -24,13 +26,13 @@ public class Basic3D implements ApplicationListener {
 	public void create () {
 		cam = new PerspectiveCamera(90, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(20f, 20f, 20f);
-		cam.lookAt(0,0,0);
+		cam.lookAt(0, 0, 0);
 		cam.near = 1f;
 		cam.far = 300f;
 		cam.update();
 
-		sraczTexture=new Texture(Gdx.files.internal("sracz.png"));
-		saulTexture=new Texture(Gdx.files.internal("saul.jpg"));
+		sraczTexture = new Texture(Gdx.files.internal("sracz.png"));
+		saulTexture = new Texture(Gdx.files.internal("saul.jpg"));
 
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
